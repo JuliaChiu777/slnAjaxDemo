@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "CallAPI";
+}
+
+<h1>CallAPI</h1>
+
+
+@section Styles{
+    <style>
+
+
+    </style>
+
+}
+
+@section Scripts{
+       <script>
+
+          ( async()=>{
+            let response = await fetch('https://localhost:7249/api/Categories');
+            let datas = await response.json();
+              console.log(datas);
+
+           })();
+
+    </script>
+
+}

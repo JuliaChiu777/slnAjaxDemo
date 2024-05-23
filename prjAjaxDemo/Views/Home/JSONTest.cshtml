@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "JSONTest";
+}
+
+<h1>JSONTest</h1>
+
+<table id ="table1" class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <td>姓名</td>
+            <td>年資</td>
+            <td>薪資</td>
+        </tr>
+    </thead>
+    <tbody >
+
+    </tbody>
+</table>
+
+@section Styles{
+    <style>
+
+
+    </style>
+
+}
+
+
+@section Scripts{
+    <script>
+
+
+
+
+        //練習:請印出所有員工資料
+        //JSON =[陣列] 與 {物件}的組合
+        //emp => is a {} 物件 ; emp物件裡面有一個employees屬性, employees是一個[]陣列,裡面有3個物件
+        const emp = {
+            "employees": [
+                { "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }
+            ]
+        };
+
+        
+        //console.log(emp.employees[0]);   //Object
+        //console.log(emp.employees[0].name)
+
+        //for (i = 0; i < emp.employees.length; i++)       //<emp.employees是陣列,[]陣列才會有.length屬性!
+        //{
+        //    console.log(emp.employees[i])
+        //    console.log(emp.employees[i].name)
+        //    console.log(emp.employees[i].salary)
+        //    console.log(emp.employees[i].workYears)
+        //}
+
+
+
+
+        const tb = document.querySelector('#table1>tbody');
+        const emps = emp.employees.map(employee => {
+            //解構賦值
+            const { name, workYears, salary } = employee;  //{ "name": "Tom", "workYears": 3, "salary": 35000 }
+            return (
+                ` <tr>
+                                  <td>${name}</td>
+                                  <td>${workYears}</td>
+                                  <td>${salary}</td>
+                                  </tr>
+                        `
+            )
+        })
+        tb.innerHTML = emps.join("");
+
+
+
+    </script>
+
+}

@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <h1>Register</h1>
+        <form method="post" action="~/api/register" id="userForm">
+            <div class="mb-3">
+                <label for="InputName" class="form-label">姓名</label>
+                <input type="text" class="form-control" id="InputName" name="name">
+
+            </div>
+            <div class="mb-3">
+                <label for="InputEmail" class="form-label">電子郵件</label>
+                <input type="email" class="form-control" id="InputEmail" name="email">
+            </div>
+            <div class="mb-3">
+                <label for="InputAge" class="form-label">年紀</label>
+                <input type="number" class="form-control" id="InputAge" name="age">
+            </div>
+
+            <div class="mb-3">
+                <label for="formfile" class="form-label">圖像</label>
+                <input type="file" class="form-control" id="formFile" name="avatar">
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="buttonSubmit">送出</button>
+        </form>
+        <div id="div1" class="alert alert-info mt-3"></div>
+
+    </div>
+    <div class="col-3"></div>
+</div>
+
+@section Styles{
+    <style>
+
+
+    </style>
+
+}
+
+@section Scripts{
+       <script>
+        const divResult = document.querySelector('#div1')
+        const submitButton = document.querySelector('#buttonSubmit')
+        const inputName = document.querySelector('#InputName')
+        const inputEmail = document.querySelector('#InputEmail')
+        const inputAge = document.querySelector('#InputAge')
+
+
+
+
+        submitButton.addEventListener('click',async(event)=>{
+            event.preventDefault(); //防止預設行為發生 -> 不要有送出的行為
+
+            const myForm = document.querySelector('#userForm')
+            const formData = new FormData(myForm)
+
+            //formData.append("password", "12345678");   //額外的資訊
+            //讀出formData中的資料
+            //for(const pair of formData.entries()){
+            //    console.log(`${pair[0]}:${pair[1]}`);
+            //}
+
+
+            const url = '@Url.Content("~/api/register/")';
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.text();
+            divResult.textContent = data;
+
+            //console.log(inputName.value);
+
+            //const url = `@Url.Content("~/api/register/")?email=${inputEmail.value}&age=${inputAge.value}&name=${inputName.value}`
+            //const response =  await fetch(url);
+            //const data = await response.text();
+            //divResult.textContent = data;
+
+        
+        })
+
+        
+
+
+
+
+
+
+    </script>
+
+}

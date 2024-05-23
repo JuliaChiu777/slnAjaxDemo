@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "HomeWork";
+}
+
+<h1>HomeWork</h1>
+<div id="card-container" class="row row-cols-1 row-cols-md-2 g-4">
+</div>
+
+
+@section Styles{
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+
+
+    </style>
+
+}
+
+
+@section Scripts{
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script src="~/js/travel.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="~/js/travel.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () 
+        {
+            const container = document.getElementById('card-container');
+            spots.CommonFormat.Section.forEach(spot => 
+                {
+                const cardHtml = `
+                    <div class="col">
+                        <div class="card">
+                            <img src="${spot.file.img[0].text}" class="card-img-top" alt="${spot.file.img[0]['@@description']}">
+                            <div class="card-body">
+                                <h5 class="card-title">${spot.stitle}</h5>
+                                <p class="card-text">${spot.xbody.substring(0, 150)}...</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        });
+
+
+        //        spots是一個 { } 物件, spots物件裡面有一個CommonFormat屬性, CommonFormat是一個物件, 裡面包著Section陣列, Section是一個陣列, 裡面有一個物件, 這個物件裡面有很多屬性, 裡面的屬性有RowNumber、REF_WP、CAT1..., 特別的一個屬性有file,
+        //    其中一個屬性file, file是一個物件, 物件裡面有img屬性, img是一個陣列, img陣列裡面有很多物件, 物件裡面的屬性包含@description、text
+
+        //const card = document.querySelector('card-container');
+        //const sportss = spots.CommonFormat.Section.map(spot=>
+        //    {
+        //        const {}
+        //    })
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

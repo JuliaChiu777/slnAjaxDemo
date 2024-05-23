@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Address";
+}
+
+<h1>Address</h1>
+<select id="selectCity"></select>
+<select id="selectDistricts"></select>
+<select id="selectRoads"></select>
+<span id="spanAddress"></span>
+
+@section Styles{
+    <style>
+
+
+    </style>
+
+}
+
+@section Scripts{
+    <script>
+
+        const selCity = document.querySelector('#selectCity');
+        const selDistricts = document.querySelector('#selectDistricts')
+        const selRoads = document.querySelector('#selectRoads')
+        const spanAddress = document.querySelector('#spanAddress')
+
+
+        //載入鄉鎮區
+
+        let loadDistricts = async () => {
+            let url = `@Url.Content("~/api/Districts")?city=${selCity.value}`             //"~/api/Districts"    //city 是Districts(string city)的參數
+            let response = await fetch(url);
+
+            if (!response.ok) {
+                alert(`有錯誤喔:${response.status}`)
+            }
+
+            let datas = await response.json();
+            let districts = datas.map((district) => {
+                return `<option value="${district}">${district}</option>`
+            })
+            selDistricts.innerHTML = districts.join("");
+            loadRoads();
+        }
+
+
+        //載入路名
+
+        let loadRoads = async () => {
+            console.log("district:", selDistricts.value);                                //district: 臺中市大雅區
+            const url = `@Url.Content("~/api/roads")?districts=${selDistricts.value}`;
+                                                                                           //"~/api/Roads"    //district 是Roads(string district)的參數
+
+            let response = await fetch(url);
+            let datas = await response.json();
+
+            let roads = datas.map((road)=>{
+                return `<option value="${road}">${road}</option>`
+            })
+
+            selRoads.innerHTML = roads.join("");
+
+            loadAddress();
+        }
+
+
+  
+        let loadAddress =asycn ()=>{
+            spanAddress.textContext =`地址:${city} ${selDistricts.value}${selRoads.value}`
+
+        }
+
+
+
+        //Ajax
+        // (async () => { })(); 網頁一載入會立即執行這段程式碼
+        (async () => {
+
+            const response = await fetch('@Url.Content("~/api/cities")')
+            //console.log(response);
+            if (!response.ok) {
+                alert(`有錯誤喔:${response.status}`)
+            }
+            //載入城市名
+            const datas = await response.json();
+
+            const cities = datas.map((city) => {                        //.map() 陣列才有.map()喔!!!
+                return `<option value="${city}">${city}</option>`        //${city}  {}裡面的city 代表第一個參數 => 也就是值
+            })
+            selCity.innerHTML = cities.join("");
+
+        })();
+
+
+        selCity.addEventListener('change', loadDistricts);    //當我在城市的下拉式選單做移動的時候  => 執行loadDistricts函式
+        selDistricts.addEventListener('change', loadRoads);   //當我在鄉鎮區的下拉式選單做移動的時候  => 執行loadRoads函式
+        selRoads.addEventListener('change', loadAddress);    //當我在路名的下拉式選單做移動的時候  => 執行loadAddress函式
+
+
+    </script>
+
+}

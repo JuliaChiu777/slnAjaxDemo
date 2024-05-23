@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <script>
+
+        //Promise物件的建立
+        function printSomething(data) {
+            const promise = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    resolve(data)
+                }, 1000);
+            })
+            return promise;
+        }
+
+
+        // 建立一個函式(function),回傳Promise物件 版
+        //printSomething('A').then(data => {
+        //    console.log(data)
+        //    return printSomething('B')
+        //}).then(data => {
+        //    console.log(data)
+        //    return printSomething('C')
+        //}).then(data => {
+        //    console.log(data)
+        //}).finally(() => {
+        //    console.log('END')
+        //})
+
+
+        //非同步語法的最終版本,就不要寫 promise、.then()啦  => 改為 async、await
+        async function show() {
+            let data = await printSomething('A')
+            console.log(data)
+            data = await printSomething('B')
+            console.log(data)
+            data = await printSomething
+            console.log(data)
+        }
+
+        show()
+
+
+
+    </script>
+
+</body>
+</html>
