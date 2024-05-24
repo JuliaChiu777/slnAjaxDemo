@@ -33,7 +33,7 @@ namespace prjAjaxDemo.Controllers
         //根據城市名讀出不會重複的鄉鎮區
         public IActionResult Districts(string city)
         {
-            var districts = _context.Addresses.Where(c => c.City == city).Select(c => c.SiteId).Distinct();
+            var districts = _context.Addresses.Where(c => c.City == city).Select(d => d.SiteId).Distinct();
             return Json(districts);
         }
 
@@ -44,6 +44,15 @@ namespace prjAjaxDemo.Controllers
             return Json(roads);
 
         }
+
+        //檢查帳號是否存在
+        public IActionResult CheckAccount(string name)
+        {
+            var member = _context.Members.Any(m => m.Name == name);
+
+            return Content(member.ToString(), "text/plain", System.Text.Encoding.UTF8);
+        }
+
 
 
         public IActionResult Avatar(int id=3) 
@@ -60,7 +69,7 @@ namespace prjAjaxDemo.Controllers
 
             return NotFound();
         }
-        //public IActionResult Register(string userName, string email, int age = 20)
+       // public IActionResult Register(string userName, string email, int age = 20)
 
         //public IActionResult Register(MemberDTO member)
         //{

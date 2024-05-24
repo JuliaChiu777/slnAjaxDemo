@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "MyHomeWorkspot";
+}
+
+<h1>MyHomeWorkspot</h1>
+<div class="row mb-3">
+    <div class="col-3"></div>
+    <div class="col-6">
+     @*   <nav>
+            <ul class="pagination" id="ul1"> //頁面
+            </ul>
+        </nav>*@
+    </div>
+    <div class="col-3">
+        <input type="search" placeholder="搜尋景點資料" class="form-control" id="inputSearch" />
+    </div>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4" id="div1">
+</div>
+
+
+@section Styles{
+
+
+    <style>
+
+
+    </style>
+
+}
+
+@section Scripts{
+    <script src="~/js/travel.js"></script>
+    <script>
+        let divSpots = document.querySelector('#div1');
+
+   
+        let spotsHtml = spots.CommonFormat.Section.map((spot) => {
+            // 解構出 spot 中的各個屬性，包括圖片 URL
+            let { RowNumber, stitle, xbody, address, file } = spot;
+            let imageUrl = "";  // 預設圖片 URL 為空字符串
+
+            // 檢查 file.img 是否存在且長度大於 0
+            if(file && file.img &&file.img.length >0)
+            {
+                imageUrl = file.img[0].text;  // 只有當 img 數組存在且不為空時才設置 URL
+            }
+
+            return (`
+                    <div class="col">
+                        <div class="card">
+                            <img src="${imageUrl}" class="card-img-top" alt="${stitle}">
+                            <div class="card-body">
+                                <h5 class="card-title">${RowNumber} ${stitle}</h5>
+                                <p class="card-text">${xbody.length <= 100 ? xbody : xbody.substring(0, 100) + '...'}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-body-secondary">${address}</small>
+                            </div>
+                        </div>
+                    </div>
+                `);
+        });
+        divSpots.innerHTML = spotsHtml.join("");
+
+
+
+
+    </script>
+
+
+
+}

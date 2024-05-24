@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "MyHomeWork4spot";
+}
+
+<h1>MyHomeWork4spot</h1>
+
+
+@section Styles{
+    <style>
+
+
+    </style>
+
+}
+
+@section Scripts{
+       <script>
+
+        const divSpots = document.querySelector('#div1');
+        const loadSpots = async () => {
+            const url = 'https://localhost:7249/api/Spots';
+
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(searchData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            console.log(data);
+
+            const spots = data.spotsResult.map(spot => {
+                const { spotId, spotTitle, spotDescription, address, spotImage } = spot;
+                return (`
+                            <div class="col">
+                                <div class="card">
+                                    <img src="${spotImage}" class="card-img-top" alt="${spotTitle}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${spotId} ${spotTitle}</h5>
+                                        <p class="card-text">${spotDescription.length <= 100 ? spotDescription : spotDescription.substring(0, 100)}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-body-secondary">${address}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        `)
+            });
+            divSpots.innerHTML = spots.join("");
+        }
+
+
+    </script>
+
+}

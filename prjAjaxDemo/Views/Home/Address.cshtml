@@ -28,7 +28,7 @@
         //載入鄉鎮區
 
         let loadDistricts = async () => {
-            let url = `@Url.Content("~/api/Districts")?city=${selCity.value}`             //"~/api/Districts"    //city 是Districts(string city)的參數
+            let url = `@Url.Content("~/api/Districts")?city=${selCity.value}`             //"~/api/Districts"    // ?city=${selCity.value}` 中的city 是Districts(string city)的參數,所以名稱要一致
             let response = await fetch(url);
 
             if (!response.ok) {
@@ -49,11 +49,12 @@
         let loadRoads = async () => {
             console.log("district:", selDistricts.value);                                //district: 臺中市大雅區
             const url = `@Url.Content("~/api/roads")?districts=${selDistricts.value}`;
-                                                                                           //"~/api/Roads"    //district 是Roads(string district)的參數
+            //"~/api/Roads"    // ?districts=${selDistricts.value}` ?後的districts  是API方法 Roads(string district)的參數
 
             let response = await fetch(url);
+            console.log(response);
             let datas = await response.json();
-
+            
             let roads = datas.map((road)=>{
                 return `<option value="${road}">${road}</option>`
             })
@@ -64,9 +65,9 @@
         }
 
 
-  
-        let loadAddress =asycn ()=>{
-            spanAddress.textContext =`地址:${city} ${selDistricts.value}${selRoads.value}`
+
+        let loadAddress = async () => {
+            spanAddress.textContext = `地址:${selCity.value}${selDistricts.value}${selRoads.value}`
 
         }
 
@@ -74,6 +75,7 @@
 
         //Ajax
         // (async () => { })(); 網頁一載入會立即執行這段程式碼
+        //載入城市名
         (async () => {
 
             const response = await fetch('@Url.Content("~/api/cities")')
@@ -88,7 +90,10 @@
                 return `<option value="${city}">${city}</option>`        //${city}  {}裡面的city 代表第一個參數 => 也就是值
             })
             selCity.innerHTML = cities.join("");
-
+            loadDistricts();
+            //await loadDistricts();
+            //await loadRoads();
+            //loadAddress();
         })();
 
 

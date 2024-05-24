@@ -1,7 +1,10 @@
 ﻿
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "HomeWorkRegister";
 }
+
+<h1>會員註冊頁面</h1>
+
 
 
 <div class="row">
@@ -36,7 +39,7 @@
     <div class="col-3"></div>
 </div>
 
-@section Styles{
+@section Styles {
     <style>
 
 
@@ -44,8 +47,8 @@
 
 }
 
-@section Scripts{
-       <script>
+@section Scripts {
+    <script>
         const divResult = document.querySelector('#div1')
         const submitButton = document.querySelector('#buttonSubmit')
         const inputName = document.querySelector('#InputName')
@@ -55,7 +58,7 @@
 
 
 
-        submitButton.addEventListener('click',async(event)=>{
+        submitButton.addEventListener('click', async (event) => {
             event.preventDefault(); //防止預設行為發生 -> 不要有送出的行為
 
             //[GET 方法傳遞表單-> url?參數=  QueryString => Querystring（查詢字串）是附加在網頁URL結尾的資訊。主要是在Url上傳遞資料，可能是一個搜尋字串、頁碼、某項特定的指標…或類似的東西 ]
@@ -87,12 +90,12 @@
             const data = await response.text();
             divResult.textContent = data;
 
-        
 
-        
+
+
         })
 
-        
+
 
 
 

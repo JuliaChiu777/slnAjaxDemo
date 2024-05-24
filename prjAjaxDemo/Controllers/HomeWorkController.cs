@@ -13,5 +13,25 @@ namespace prjAjaxDemo.Controllers
         {
             return View();
         }
+
+        public IActionResult MyHomeWorkspot()
+        {
+            return View();
+        }
+
+        public IActionResult MyHomeWork4spot()
+        {
+            return View();
+        }
+        public IActionResult TeacherHomeWorkspot()
+        {
+            return View();
+        }
+
+        public IActionResult HomeWorkRegister()
+        {
+            return View();
+        }
+
     }
 }
