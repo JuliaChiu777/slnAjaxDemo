@@ -58,7 +58,8 @@
         submitButton.addEventListener('click',async(event)=>{
             event.preventDefault(); //防止預設行為發生 -> 不要有送出的行為
 
-            //[GET 方法傳遞表單-> url?參數=  QueryString => Querystring（查詢字串）是附加在網頁URL結尾的資訊。主要是在Url上傳遞資料，可能是一個搜尋字串、頁碼、某項特定的指標…或類似的東西 ]
+            //[GET 方法傳遞表單
+            //  url?參數=  QueryString => Querystring（查詢字串）是附加在網頁URL結尾的資訊。主要是在Url上傳遞資料，可能是一個搜尋字串、頁碼、某項特定的指標…或類似的東西 ]
             //在網址結尾加上一個問號（？）開始，每一組參數都是用「＆」區隔開來，是一種KEY / Value的組合。
             //console.log(inputName.value);
             //const url = `@Url.Content("~/api/register/")?email=${inputEmail.value}&age=${inputAge.value}&name=${inputName.value}`
@@ -67,14 +68,15 @@
             //divResult.textContent = data;
 
 
-            //[POST 方法傳遞表單]
+            //表單一般都是透過 [POST 方法傳遞表單]  因為通常都是帶有敏感的資訊
             const myForm = document.querySelector('#userForm')
-            const formData = new FormData(myForm)
+            const formData = new FormData(myForm)                           //可以把整個表單的資料包在一個FormData的物件裡面做傳遞,FormData是JavaScript的物件,用來收集和發送表單資料
 
-            //formData.append("password", "12345678");   //額外的資訊
+            //formData.append("password", "12345678");   //額外的資訊         //new出一個空的FormData物件,append() 裡面也是有一key value 把資料也加進FormData
+            
             //讀出formData中的資料
-            //for(const pair of formData.entries()){
-            //    console.log(`${pair[0]}:${pair[1]}`);
+            //for(const pair of formData.entries()){           //透過entries()方法讀資出一筆一筆的資料
+            //    console.log(`${pair[0]}:${pair[1]}`);        // 一筆一筆的資料 就是一組 pair[0] => key   pair[1] => value
             //}
 
 
