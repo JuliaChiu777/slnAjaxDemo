@@ -12,6 +12,7 @@
             <div class="mb-3">
                 <label for="InputName" class="form-label">姓名</label>
                 <input type="text" class="form-control" id="InputName" name="name">
+                <div id="div2" class="alert alert-info mt-3"></div>
 
             </div>
             <div class="mb-3">
@@ -47,6 +48,8 @@
 @section Scripts{
        <script>
         const divResult = document.querySelector('#div1')
+        const divNameResult =document.querySelector('#div2') //顯示在姓名下方,姓名存在,則顯示 檢查帳號已存在 ;若姓名不存在,則顯示帳號可使用
+
         const submitButton = document.querySelector('#buttonSubmit')
         const inputName = document.querySelector('#InputName')
         const inputEmail = document.querySelector('#InputEmail')

@@ -15,17 +15,24 @@
             <div class="mb-3">
                 <label for="InputName" class="form-label">姓名</label>
                 <input type="text" class="form-control" id="InputName" name="name">
-
+                <span id="nameCheckResult" class="form-text"></span>
             </div>
             <div class="mb-3">
                 <label for="InputEmail" class="form-label">電子郵件</label>
                 <input type="email" class="form-control" id="InputEmail" name="email">
             </div>
             <div class="mb-3">
+                <label for="InputPassword" class="form-label">密碼</label>
+                <input type="password" class="form-control" id="InputPassword" name="password">
+            </div>
+            <div class="mb-3">
+                <label for="InputConfirmPassword" class="form-label">再次確認密碼</label>
+                <input type="password" class="form-control" id="InputConfirmPassword" name="confirmPassword">
+                <span id="passwordCheckResult" class="form-text"></span>
+            <div class="mb-3">
                 <label for="InputAge" class="form-label">年紀</label>
                 <input type="number" class="form-control" id="InputAge" name="age">
             </div>
-
             <div class="mb-3">
                 <label for="formfile" class="form-label">圖像</label>
                 <input type="file" class="form-control" id="formFile" name="avatar">
@@ -55,31 +62,52 @@
         const inputEmail = document.querySelector('#InputEmail')
         const inputAge = document.querySelector('#InputAge')
 
+        const inputPassword = document.querySelector('#InputPassword');
+        const inputConfirmPassword = document.querySelector('#InputConfirmPassword');
+        const nameCheckResult = document.querySelector('#nameCheckResult');
+        const passwordCheckResult = document.querySelector('#passwordCheckResult');
+
+
+        //檢查姓名是否已存在
+        inputName.addEventListener('blur', async () => {
+            let response = await fetch(`@Url.Content("~/api/CheckAccount/")?name=${inputName.value}`);
+            let data = await response.text();
+            if (data === "True") {
+                nameCheckResult.textContent = "*此帳號名稱已被註冊";
+                nameCheckResult.style.color = 'red';
+            } else {
+                nameCheckResult.textContent = "帳號可使用";
+                nameCheckResult.style.color = 'green';
+            }
+        });
+
+        //檢"確認密碼欄位"與"密碼輸入欄位" 是否一致
+        inputConfirmPassword.addEventListener('blur', () => {
+            if (inputPassword.value !== inputConfirmPassword.value) {
+                passwordCheckResult.textContent = "密碘與上方不符合，請再確認";
+                passwordCheckResult.style.color = 'red';
+            } else {
+                passwordCheckResult.textContent = "";
+            }
+        });
+
+
 
 
 
         submitButton.addEventListener('click', async (event) => {
             event.preventDefault(); //防止預設行為發生 -> 不要有送出的行為
 
-            //[GET 方法傳遞表單-> url?參數=  QueryString => Querystring（查詢字串）是附加在網頁URL結尾的資訊。主要是在Url上傳遞資料，可能是一個搜尋字串、頁碼、某項特定的指標…或類似的東西 ]
-            //在網址結尾加上一個問號（？）開始，每一組參數都是用「＆」區隔開來，是一種KEY / Value的組合。
-            //console.log(inputName.value);
-            //const url = `@Url.Content("~/api/register/")?email=${inputEmail.value}&age=${inputAge.value}&name=${inputName.value}`
-            //const response =  await fetch(url);
-            //const data = await response.text();
-            //divResult.textContent = data;
-
+            
+            if (inputPassword.value !== inputConfirmPassword.value) {
+                passwordCheckResult.textContent = "密碼與上方不符合，請再確認";
+                return; // 如果密碼不符，停止表單提交
+            }
 
             //[POST 方法傳遞表單]
             const myForm = document.querySelector('#userForm')
             const formData = new FormData(myForm)
-
-            //formData.append("password", "12345678");   //額外的資訊
-            //讀出formData中的資料
-            //for(const pair of formData.entries()){
-            //    console.log(`${pair[0]}:${pair[1]}`);
-            //}
-
+   
 
             const url = '@Url.Content("~/api/register/")';
             const response = await fetch(url, {

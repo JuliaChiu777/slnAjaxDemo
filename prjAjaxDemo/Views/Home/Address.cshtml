@@ -28,8 +28,12 @@
         //載入鄉鎮區
 
         let loadDistricts = async () => {
-            let url = `@Url.Content("~/api/Districts")?city=${selCity.value}`             //"~/api/Districts"    // ?city=${selCity.value}` 中的city 是Districts(string city)的參數,所以名稱要一致
-            let response = await fetch(url);
+
+            let url = `@Url.Content("~/api/Districts")?city=${selCity.value}`
+            //"~/api/Districts"    // ?city=${selCity.value}` 中的city 是要傳入 Districts(string city)的參數,所以名稱需一致
+            //  => city = 前端下拉選單選到的城市
+
+            let response = await fetch(url);    // => 透過fetch() 向帶有參數的URL請求傳遞 呼叫 API controller 裡面的 Districts()
 
             if (!response.ok) {
                 alert(`有錯誤喔:${response.status}`)
