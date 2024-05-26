@@ -88,13 +88,17 @@ namespace prjAjaxDemo.Controllers
             }
 
             //取得上傳檔案的資訊
-            //string info = $"{ avatar.FileName }- { avatar.Length} - { avatar.ContentType}";
-
+            //string info = $"{avatar.FileName} - {avatar.Length} - {avatar.ContentType}";
+            //string info = _hostEnvironment.ContentRootPath;
 
             //檔案上傳寫進資料夾
             //todo1 判斷檔案是否存在
-            //todo2 限制上傳檔案的大小跟類型
+            //todo2 限制上傳檔案的大小跟類型 
 
+            //實際路徑
+            //string uploadPath = @"C:\Users\User\Documents\workspace\MSIT158Site\wwwroot\uploads\a.png";
+            //WebRootPath：C: \Users\User\Documents\workspace\MSIT158Site\wwwroot
+            //ContentRootPath：C:\Users\User\Documents\workspace\MSIT158Site
             string uploadPath = Path.Combine(_hostEnvironment.WebRootPath, "uploads", avatar.FileName);
             string info = uploadPath;
             using (var fileStream = new FileStream(uploadPath, FileMode.Create))
@@ -103,23 +107,21 @@ namespace prjAjaxDemo.Controllers
             }
 
             //檔案上傳轉成二進位
-            byte[] imgByte = null;           //byte[] 類的 imgByte變數
+            byte[]? imgByte = null;
             using (var memoryStream = new MemoryStream())
             {
                 avatar.CopyTo(memoryStream);
                 imgByte = memoryStream.ToArray();
             }
 
-
             //寫進資料庫
             member.FileName = avatar.FileName;
             member.FileData = imgByte;
-
             _context.Members.Add(member);
             _context.SaveChanges();
-            return Content(info, "text/plain", Encoding.UTF8);
 
-            //return Content($"Hello {member.Name}，{member.Age} 歲了，電子郵件是 {member.Email}", "text/html", System.Text.Encoding.UTF8);
+            return Content(info, "text/plain", System.Text.Encoding.UTF8);
+            // return Content($"Hello {member.Name}，{member.Age} 歲了，電子郵件是 {member.Email}", "text/html", System.Text.Encoding.UTF8);
         }
 
         [HttpPost]

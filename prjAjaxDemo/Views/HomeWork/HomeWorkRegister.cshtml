@@ -69,6 +69,7 @@
 
 
         //檢查姓名是否已存在
+        //GET方法 => 參數只有一個?name=${inputName.value}`)
         inputName.addEventListener('blur', async () => {
             let response = await fetch(`@Url.Content("~/api/CheckAccount/")?name=${inputName.value}`);
             let data = await response.text();
@@ -81,10 +82,13 @@
             }
         });
 
-        //檢"確認密碼欄位"與"密碼輸入欄位" 是否一致
+
+
+
+        // //檢"確認密碼欄位"與"密碼輸入欄位" 是否一致
         inputConfirmPassword.addEventListener('blur', () => {
             if (inputPassword.value !== inputConfirmPassword.value) {
-                passwordCheckResult.textContent = "密碘與上方不符合，請再確認";
+                passwordCheckResult.textContent = "密碼與上方不符合，請再確認";
                 passwordCheckResult.style.color = 'red';
             } else {
                 passwordCheckResult.textContent = "";
@@ -93,14 +97,14 @@
 
 
 
-
-
+        //送出鈕按下 資料提交
         submitButton.addEventListener('click', async (event) => {
             event.preventDefault(); //防止預設行為發生 -> 不要有送出的行為
 
             
             if (inputPassword.value !== inputConfirmPassword.value) {
                 passwordCheckResult.textContent = "密碼與上方不符合，請再確認";
+                passwordCheckResult.style.color = 'red';
                 return; // 如果密碼不符，停止表單提交
             }
 
@@ -126,6 +130,7 @@
 
 
 
+ 
 
 
 
